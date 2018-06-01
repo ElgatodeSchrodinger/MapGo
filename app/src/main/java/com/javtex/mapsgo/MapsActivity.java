@@ -35,6 +35,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.List;
+
+import static com.javtex.mapsgo.CombuyUtils.*;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback{
 
     private static final int DEFAULT_ZOOM = 15;
@@ -48,20 +52,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationRequest locationrequest;
     private boolean PermisoConcedido ;
 
+    private List<CombuyLocal> locales;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-/*
-        if(ManejoPermiso()==1){
 
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-
-        }else{
-            Log.v("MAPS","Nothing");
-        }*/
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -80,41 +76,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ObtenerUbicacion(); // Obtiene Ubicacion del dispositivo y coloca la posicion en el mapa
 
-        /*
-        Toast.makeText(this, "Mapa Listo!!!", Toast.LENGTH_LONG).show();
+        //obtenerLocales();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.v("MAPS","Sin permisos .. (saliendo de onMapReady)");
-            return;
-        }else{
 
-            Log.v("MAPS","Antes de entrar a obtener ubicacion");
-            Task<Location> a=mFusedLocationClient.getLastLocation();
-
-            a.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    if (task.isSuccessful()) {
-                        // Set the map's camera position to the current location of the device.
-                        CurrentLocation = task.getResult();
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(CurrentLocation.getLatitude(),
-                                        CurrentLocation.getLongitude()), DEFAULT_ZOOM));
-                    } else {
-                        Log.d("MAPS", "Current location is null. Using defaults.");
-                        Log.e("MAPS", "Exception: %s", task.getException());
-                        mMap.moveCamera(CameraUpdateFactory
-                                .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                    }
-                }
-            });
-
-            Log.v("MAPS",a.getResult().toString());
-
-        }
-        */
     }
+    private void agregarMarcador(double Lat,double Lng,String descripcion){
+        Log.v("RETRO","AGREGANDO MARCADORES");
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(Lat, Lng))
+                .title(descripcion));
+
+    }
+
+    private void obtenerLocales() {
+        Log.v("MAPS","OBTENIENDO LOCALES");
+        List<CombuyLocal> aux, lista=new CombuyRetrofit().getListLocal();
+
+        //ObtenerUbicacion();
+
+
+        //Log.v("MAPS",CurrentLocation.getLatitude()+" "+CurrentLocation.getLongitude());
+        //aux = CombuyUtils.obtenerCercanos(lista,CurrentLocation,2);
+
+        //Log.v("MAPS",lista.toString());
+        for(CombuyLocal i : locales){
+            agregarMarcador(i.getLatitud(),i.getLongitud(),i.getDescripcion());
+        }
+
+    }
+
     private void ObtenerPermisodeUbicacion() {
         /*
          * Consulta el permison de FINE_LOCATION, el resultado es manejado por el callback
@@ -184,6 +174,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(CurrentLocation.getLatitude(),
                                             CurrentLocation.getLongitude()), DEFAULT_ZOOM));
+                                Log.v("TASK","ESTA ES LA UBICACION");
+                                Log.v("TASK",test(CurrentLocation));
+
+                                locales = obtenerCercanos(CurrentLocation,2);
+                                obtenerLocales();
+
+                                //locales=CombuyUtils.obtenerCercanos(CurrentLocation,2);
                         } else {
                             Log.d("MAPS", "Current location is null. Using defaults.");
                             Log.e("MAPS", "Exception: %s", task.getException());
