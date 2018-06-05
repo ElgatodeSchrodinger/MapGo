@@ -78,30 +78,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //obtenerLocales();
 
-
     }
-    private void agregarMarcador(double Lat,double Lng,String descripcion){
+    private void agregarMarcador(double Lat,double Lng,String nombre,String descripcion){
         Log.v("RETRO","AGREGANDO MARCADORES");
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(Lat, Lng))
-                .title(descripcion));
+                .title(nombre)
+                .snippet(descripcion));
 
     }
 
     private void obtenerLocales() {
         Log.v("MAPS","OBTENIENDO LOCALES");
-        List<CombuyLocal> aux, lista=new CombuyRetrofit().getListLocal();
-
-        //ObtenerUbicacion();
-
-
-        //Log.v("MAPS",CurrentLocation.getLatitude()+" "+CurrentLocation.getLongitude());
-        //aux = CombuyUtils.obtenerCercanos(lista,CurrentLocation,2);
-
-        //Log.v("MAPS",lista.toString());
-        for(CombuyLocal i : locales){
-            agregarMarcador(i.getLatitud(),i.getLongitud(),i.getDescripcion());
+        if(locales!=null){
+            for(CombuyLocal i : locales){
+                agregarMarcador(i.getLatitud(),i.getLongitud(),i.getNombrenegocio(),i.getDescripcion());
+            }
+        }else{
+            Toast.makeText(this, "No se encontro ningun local u.u", Toast.LENGTH_LONG).show();
         }
+
+
 
     }
 
@@ -177,7 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.v("TASK","ESTA ES LA UBICACION");
                                 Log.v("TASK",test(CurrentLocation));
 
-                                locales = obtenerCercanos(CurrentLocation,2);
+                                locales = obtenerCercanos(CurrentLocation,5);
                                 obtenerLocales();
 
                                 //locales=CombuyUtils.obtenerCercanos(CurrentLocation,2);

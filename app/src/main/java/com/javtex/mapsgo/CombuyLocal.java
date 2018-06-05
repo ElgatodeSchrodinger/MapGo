@@ -4,35 +4,32 @@ import java.util.Comparator;
 
 public class CombuyLocal {
     private int id;
+    private String nombrenegocio;
+    private String ruc;
     private double latitud;
     private double longitud;
     private String descripcion;
     private String telefono;
     private String hora_inicio;
     private String hora_fin;
-    private String atencionestado;
-    private int idempresa;
+    private String idtiponegocio;
     private float distancia;//Agregado para obtener la distancia entre este negocio y la posicion actual del usuario
 
-    public CombuyLocal(int id, double latitud, double longitud, String descripcion, String telefono, String hora_inicio, String hora_fin, String atencionestado, int idempresa) {
-        this.distancia=0;
-        this.id = id;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.descripcion = descripcion;
-        this.telefono = telefono;
-        this.hora_inicio = hora_inicio;
-        this.hora_fin = hora_fin;
-        this.atencionestado = atencionestado;
-        this.idempresa = idempresa;
-    }
-
-    public float getDistancia() {
-        return distancia;
-    }
-
-    public void setDistancia(float distancia) {
-        this.distancia = distancia;
+    @Override
+    public String toString() {
+        return "CombuyLocal{" +
+                "id=" + id +
+                ", nombrenegocio='" + nombrenegocio + '\'' +
+                ", ruc='" + ruc + '\'' +
+                ", latitud=" + latitud +
+                ", longitud=" + longitud +
+                ", descripcion='" + descripcion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", hora_inicio='" + hora_inicio + '\'' +
+                ", hora_fin='" + hora_fin + '\'' +
+                ", idtiponegocio='" + idtiponegocio + '\'' +
+                ", distancia=" + distancia +
+                '}';
     }
 
     public int getId() {
@@ -41,6 +38,22 @@ public class CombuyLocal {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNombrenegocio() {
+        return nombrenegocio;
+    }
+
+    public void setNombrenegocio(String nombrenegocio) {
+        this.nombrenegocio = nombrenegocio;
+    }
+
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
 
     public double getLatitud() {
@@ -91,37 +104,33 @@ public class CombuyLocal {
         this.hora_fin = hora_fin;
     }
 
-    public String getAtencionestado() {
-        return atencionestado;
+    public String getIdtiponegocio() {
+        return idtiponegocio;
     }
 
-    public void setAtencionestado(String atencionestado) {
-        this.atencionestado = atencionestado;
+    public void setIdtiponegocio(String idtiponegocio) {
+        this.idtiponegocio = idtiponegocio;
     }
 
-    public int getIdempresa() {
-        return idempresa;
+    public float getDistancia() {
+        return distancia;
     }
 
-    public void setIdempresa(int idempresa) {
-        this.idempresa = idempresa;
+    public void setDistancia(float distancia) {
+        this.distancia = distancia;
     }
 
-
-
-    @Override
-    public String toString() {
-        return "CombuyLocal{" +
-                "id=" + id +
-                ", latitud=" + latitud +
-                ", longitud=" + longitud +
-                ", descripcion='" + descripcion + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", hora_inicio='" + hora_inicio + '\'' +
-                ", hora_fin='" + hora_fin + '\'' +
-                ", atencionestado='" + atencionestado + '\'' +
-                ", idempresa=" + idempresa +
-                '}';
+    public CombuyLocal(int id, String nombrenegocio, String ruc, double latitud, double longitud, String descripcion, String telefono, String hora_inicio, String hora_fin, String idtiponegocio) {
+        this.id = id;
+        this.nombrenegocio = nombrenegocio;
+        this.ruc = ruc;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.descripcion = descripcion;
+        this.telefono = telefono;
+        this.hora_inicio = hora_inicio;
+        this.hora_fin = hora_fin;
+        this.idtiponegocio = idtiponegocio;
+        this.distancia = 0;
     }
-
 }

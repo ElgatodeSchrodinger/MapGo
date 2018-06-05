@@ -19,6 +19,7 @@ public class CombuyUtils {
 
         Log.v("UTILS","ENTRA ACA?");
         int count=0;
+
         Location aux= new Location("");
 
         List<CombuyLocal> retorno = new ArrayList<CombuyLocal>();
